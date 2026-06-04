@@ -1,0 +1,110 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>StasisRifleUpgrade</AssemblyName>
+    <RootNamespace>StasisRifleUpgrade</RootNamespace>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <GameDir Condition="'$(GameDir)' == '' And Exists('C:\Program Files (x86)\Steam\steamapps\common\Subnautica')">C:\Program Files (x86)\Steam\steamapps\common\Subnautica</GameDir>
+    <GameManagedDir>$(GameDir)\Subnautica_Data\Managed</GameManagedDir>
+    <BepInExDir>$(GameDir)\BepInEx</BepInExDir>
+    <OutputPath>$(MSBuildThisFileDirectory)..\bin\$(Configuration)\$(AssemblyName)\</OutputPath>
+  </PropertyGroup>
+
+  <Target Name="ValidateSubnauticaReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="'$(GameDir)' == '' Or !Exists('$(GameManagedDir)\Assembly-CSharp.dll')" Text="Subnautica assemblies were not found. Pass /p:GameDir=&quot;path\to\Subnautica&quot;." />
+    <Error Condition="!Exists('$(BepInExDir)\core\BepInEx.dll')" Text="BepInEx was not found under $(BepInExDir)." />
+    <Error Condition="!Exists('$(BepInExDir)\plugins\Nautilus\Nautilus.dll')" Text="Nautilus was not found under $(BepInExDir)\plugins\Nautilus." />
+    <Error Condition="!Exists('$(BepInExDir)\plugins\ToolsUpgradesLIB\UpgradesLIB.dll')" Text="ToolsUpgradesLIB/UpgradesLIB was not found under $(BepInExDir)\plugins\ToolsUpgradesLIB." />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>$(GameManagedDir)\mscorlib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>$(GameManagedDir)\System.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>$(GameManagedDir)\System.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GameManagedDir)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>$(GameManagedDir)\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine">
+      <HintPath>$(GameManagedDir)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GameManagedDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(GameManagedDir)\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(GameManagedDir)\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>$(GameManagedDir)\Unity.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>$(GameManagedDir)\Unity.Addressables.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>$(GameManagedDir)\Unity.ResourceManager.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="BepInEx">
+      <HintPath>$(BepInExDir)\core\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(BepInExDir)\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Nautilus">
+      <HintPath>$(BepInExDir)\plugins\Nautilus\Nautilus.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UpgradesLIB">
+      <HintPath>$(BepInExDir)\plugins\ToolsUpgradesLIB\UpgradesLIB.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Assets\*.png">
+      <Link>Assets\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="DeployToGamePlugins" AfterTargets="Build" Condition="'$(DeployToGame)' == 'true' And Exists('$(BepInExDir)\plugins')">
+    <ItemGroup>
+      <_IconFiles Include="$(TargetDir)Assets\*.png" />
+    </ItemGroup>
+    <MakeDir Directories="$(BepInExDir)\plugins\StasisRifleUpgrade\Assets" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExDir)\plugins\StasisRifleUpgrade\" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).pdb" DestinationFolder="$(BepInExDir)\plugins\StasisRifleUpgrade\" SkipUnchangedFiles="false" Condition="Exists('$(TargetDir)$(AssemblyName).pdb')" />
+    <Copy SourceFiles="@(_IconFiles)" DestinationFolder="$(BepInExDir)\plugins\StasisRifleUpgrade\Assets\" SkipUnchangedFiles="false" />
+  </Target>
+</Project>
