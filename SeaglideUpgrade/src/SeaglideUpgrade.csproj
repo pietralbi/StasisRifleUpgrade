@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>StasisRifleUpgrade</AssemblyName>
-    <RootNamespace>StasisRifleUpgrade</RootNamespace>
+    <AssemblyName>SeaglideUpgrade</AssemblyName>
+    <RootNamespace>SeaglideUpgrade</RootNamespace>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
@@ -11,7 +11,7 @@
     <GameDir Condition="'$(GameDir)' == '' And Exists('C:\Program Files (x86)\Steam\steamapps\common\Subnautica')">C:\Program Files (x86)\Steam\steamapps\common\Subnautica</GameDir>
     <GameManagedDir>$(GameDir)\Subnautica_Data\Managed</GameManagedDir>
     <BepInExDir>$(GameDir)\BepInEx</BepInExDir>
-    <OutputPath>$(MSBuildThisFileDirectory)..\bin\$(Configuration)\$(AssemblyName)\</OutputPath>
+    <OutputPath>$(MSBuildThisFileDirectory)..\..\bin\$(Configuration)\$(AssemblyName)\</OutputPath>
   </PropertyGroup>
 
   <Target Name="ValidateSubnauticaReferences" BeforeTargets="ResolveReferences">
@@ -56,10 +56,6 @@
       <HintPath>$(GameManagedDir)\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>$(GameManagedDir)\UnityEngine.PhysicsModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>$(GameManagedDir)\Unity.InputSystem.dll</HintPath>
       <Private>false</Private>
@@ -102,9 +98,9 @@
     <ItemGroup>
       <_IconFiles Include="$(TargetDir)Assets\*.png" />
     </ItemGroup>
-    <MakeDir Directories="$(BepInExDir)\plugins\StasisRifleUpgrade\Assets" />
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExDir)\plugins\StasisRifleUpgrade\" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="$(TargetDir)$(AssemblyName).pdb" DestinationFolder="$(BepInExDir)\plugins\StasisRifleUpgrade\" SkipUnchangedFiles="false" Condition="Exists('$(TargetDir)$(AssemblyName).pdb')" />
-    <Copy SourceFiles="@(_IconFiles)" DestinationFolder="$(BepInExDir)\plugins\StasisRifleUpgrade\Assets\" SkipUnchangedFiles="false" />
+    <MakeDir Directories="$(BepInExDir)\plugins\SeaglideUpgrade\Assets" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExDir)\plugins\SeaglideUpgrade\" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="$(TargetDir)$(AssemblyName).pdb" DestinationFolder="$(BepInExDir)\plugins\SeaglideUpgrade\" SkipUnchangedFiles="false" Condition="Exists('$(TargetDir)$(AssemblyName).pdb')" />
+    <Copy SourceFiles="@(_IconFiles)" DestinationFolder="$(BepInExDir)\plugins\SeaglideUpgrade\Assets\" SkipUnchangedFiles="false" />
   </Target>
 </Project>

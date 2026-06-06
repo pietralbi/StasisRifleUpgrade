@@ -24,7 +24,7 @@ public class StasisRifleUpgradePlugin : BaseUnityPlugin
     private const string PluginName = "StasisRifleUpgrade";
     private const string VersionString = "1.1.0";
 
-    public const TechType StasisRifleTechType = (TechType)755;
+    public const TechType StasisRifleTechType = TechType.StasisRifle;
     public const string EquipmentTypeName = "StasisRifleUpgrade";
     public const string StorageName = "StasisUpgradeStorage";
     public const string StorageClassId = "StasisUpgradeStorageChild";

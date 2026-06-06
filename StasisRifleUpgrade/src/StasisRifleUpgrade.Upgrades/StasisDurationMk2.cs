@@ -19,7 +19,7 @@ internal class StasisDurationMk2
 
 	public static PrefabInfo Mk2DurationPrefabInfo;
 
-	public static TechType TechType = (TechType)2101;
+	public static TechType TechType = TechType.VehiclePowerUpgradeModule;
 
 	public static void Register()
 	{
@@ -41,13 +41,13 @@ internal class StasisDurationMk2
 			Ingredients = new List<Ingredient>
 			{
 				new Ingredient(StasisDurationMk1.Mk1DurationPrefabInfo.TechType, 1),
-				new Ingredient((TechType)44, 1),
-				new Ingredient((TechType)8, 3),
-				new Ingredient((TechType)59, 1)
+				new Ingredient(TechType.ComputerChip, 1),
+				new Ingredient(TechType.Lead, 3),
+				new Ingredient(TechType.Aerogel, 1)
 			}
 		}).WithFabricatorType(Handheldprefab.HandheldfabTreeType).WithStepsToFabricatorTab(new string[2] { "Tools", "StasisRifleTab" })
 			.WithCraftingTime(5f);
-		GadgetExtensions.SetUnlock((ICustomPrefab)(object)Mk2DurationPrefab, (TechType)755, 1);
+		GadgetExtensions.SetUnlock((ICustomPrefab)(object)Mk2DurationPrefab, StasisRifleUpgradePlugin.StasisRifleTechType, 1);
 		GadgetExtensions.SetEquipment((ICustomPrefab)(object)Mk2DurationPrefab, StasisRifleUpgradePlugin.EquipmentType);
 		GadgetExtensions.SetPdaGroupCategory((ICustomPrefab)(object)Mk2DurationPrefab, Plugin.toolupgrademodules, StasisRifleUpgradePlugin.StasisRifleUpgrades);
 		Mk2DurationPrefab.Register();

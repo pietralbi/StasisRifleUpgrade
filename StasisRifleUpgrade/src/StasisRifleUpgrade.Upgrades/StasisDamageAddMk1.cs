@@ -19,7 +19,7 @@ internal class StasisDamageAddMk1
 
 	public static PrefabInfo Mk1DamageAddPrefabInfo;
 
-	public static TechType TechType = (TechType)2101;
+	public static TechType TechType = TechType.VehiclePowerUpgradeModule;
 
 	public static void Register()
 	{
@@ -40,13 +40,13 @@ internal class StasisDamageAddMk1
 			craftAmount = 1,
 			Ingredients = new List<Ingredient>
 			{
-				new Ingredient((TechType)54, 3),
-				new Ingredient((TechType)53, 1),
-				new Ingredient((TechType)32, 2)
+				new Ingredient(TechType.Magnetite, 3),
+				new Ingredient(TechType.HydrochloricAcid, 1),
+				new Ingredient(TechType.CopperWire, 2)
 			}
 		}).WithFabricatorType(Handheldprefab.HandheldfabTreeType).WithStepsToFabricatorTab(new string[2] { "Tools", "StasisRifleTab" })
 			.WithCraftingTime(5f);
-		GadgetExtensions.SetUnlock((ICustomPrefab)(object)Mk1DamageAddPrefab, (TechType)755, 1);
+		GadgetExtensions.SetUnlock((ICustomPrefab)(object)Mk1DamageAddPrefab, StasisRifleUpgradePlugin.StasisRifleTechType, 1);
 		GadgetExtensions.SetEquipment((ICustomPrefab)(object)Mk1DamageAddPrefab, StasisRifleUpgradePlugin.EquipmentType);
 		GadgetExtensions.SetPdaGroupCategory((ICustomPrefab)(object)Mk1DamageAddPrefab, Plugin.toolupgrademodules, StasisRifleUpgradePlugin.StasisRifleUpgrades);
 		Mk1DamageAddPrefab.Register();
